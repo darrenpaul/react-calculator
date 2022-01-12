@@ -84,6 +84,7 @@ const App = () => {
 
   const calculate = () => {
     const cleanStr = userInput.replaceAll("x", "*");
+    // eslint-disable-next-line
     setUserInput(eval(cleanStr).toString());
   };
 
