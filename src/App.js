@@ -1,8 +1,9 @@
 import React, { useState } from "react";
 import { Key } from "./components/Key";
+import { ToggleSwitch } from "./components/ToggleSwitch";
 
 const App = () => {
-  const [theme, setTheme] = useState([
+  const theme = [
     {
       mainBackground: "bg-theme-1-main-background",
       toggleBackground: "bg-theme-1-toggle-background",
@@ -15,6 +16,10 @@ const App = () => {
       textColor3: "text-app-theme-1-text-color-3",
       buttonText1: "text-app-theme-1-text-color-1",
       screenTextColor: "text-theme-white",
+      titleTextColor: "text-theme-white",
+      keyShadow1: "shadow-[inset_0_-4px_1px_0_#404E72]",
+      keyShadow2: "shadow-[inset_0_-4px_1px_0_#93261A]",
+      keyShadow3: "shadow-[inset_0_-4px_1px_0_#B4A597]",
     },
     {
       mainBackground: "bg-theme-2-main-background",
@@ -28,6 +33,10 @@ const App = () => {
       textColor3: "text-app-theme-2-text-color-3",
       buttonText1: "text-app-theme-2-text-color-1",
       screenTextColor: "text-theme-2-screen-text-color",
+      titleTextColor: "text-theme-2-screen-text-color",
+      keyShadow1: "shadow-[inset_0_-4px_1px_0_#1B5F65]",
+      keyShadow2: "shadow-[inset_0_-4px_1px_0_#893901]",
+      keyShadow3: "shadow-[inset_0_-4px_1px_0_#A69D91]",
     },
     {
       mainBackground: "bg-theme-3-main-background",
@@ -41,8 +50,12 @@ const App = () => {
       textColor3: "text-app-theme-3-text-color-3",
       buttonText1: "text-app-theme-3-text-color-3",
       screenTextColor: "text-theme-3-screen-text-color",
+      titleTextColor: "text-theme-3-screen-text-color",
+      keyShadow1: "shadow-[inset_0_-4px_1px_0_#BC15F4]",
+      keyShadow2: "shadow-[inset_0_-4px_1px_0_#6CF9F2]",
+      keyShadow3: "shadow-[inset_0_-4px_1px_0_#871C9C]",
     },
-  ]);
+  ];
 
   const [themeIndex, setThemeIndex] = useState(0);
 
@@ -81,7 +94,6 @@ const App = () => {
   const changeTheme = () => {
     const currentIndex = themeIndex;
     let nextIndex = currentIndex + 1;
-    console.log(nextIndex);
     if (nextIndex === 3) {
       nextIndex = 0;
     }
@@ -89,22 +101,40 @@ const App = () => {
     setThemeIndex(nextIndex);
   };
 
+  const setThemeIndexValue = (value) => {
+    setThemeIndex(value);
+  };
+
   return (
     <div
-      className={`${theme[themeIndex].mainBackground} w-screen h-screen flex items-center justify-center font-spartan font-bold`}
+      className={`${theme[themeIndex].mainBackground} w-screen h-screen flex items-center justify-center font-spartan font-bold p-4`}
     >
       <div className="flex flex-col gap-4 w-96">
-        <div className="flex flex-row justify-between">
-          <p className={`${theme[themeIndex].textColor2}`}>calc</p>
-          <div onClick={changeTheme}>
-            <p className={`uppercase ${theme[themeIndex].textColor2}`}>theme</p>
+        <div className="flex flex-row items-end justify-between">
+          <p className={`${theme[themeIndex].titleTextColor} text-2xl`}>calc</p>
+          <div className="flex items-end gap-4">
+            <p
+              className={`uppercase ${theme[themeIndex].titleTextColor} text-xs`}
+            >
+              theme
+            </p>
+            <ToggleSwitch
+              activeIndex={themeIndex}
+              backgroundColor={theme[themeIndex].toggleBackground}
+              switchColor={theme[themeIndex].keyBackground2}
+              textColor={theme[themeIndex].titleTextColor}
+              onToggleClickFn={changeTheme}
+              onClickFn={setThemeIndexValue}
+            />
           </div>
         </div>
 
         <div
           className={`${theme[themeIndex].screenBackground} w-full h-20 rounded-lg flex items-center justify-end p-4`}
         >
-          <p className={`${theme[themeIndex].screenTextColor}`}>{userInput}</p>
+          <p className={`${theme[themeIndex].screenTextColor} text-3xl`}>
+            {userInput}
+          </p>
         </div>
 
         <div
@@ -114,25 +144,30 @@ const App = () => {
             <Key
               value={7}
               backgroundColor={theme[themeIndex].keyBackground3}
+              shadowColor={theme[themeIndex].keyShadow3}
               onClickFn={addDigit}
               textColor={theme[themeIndex].textColor2}
             />
             <Key
               value={8}
               backgroundColor={theme[themeIndex].keyBackground3}
+              shadowColor={theme[themeIndex].keyShadow3}
               onClickFn={addDigit}
               textColor={theme[themeIndex].textColor2}
             />
             <Key
               value={9}
               backgroundColor={theme[themeIndex].keyBackground3}
+              shadowColor={theme[themeIndex].keyShadow3}
               onClickFn={addDigit}
               textColor={theme[themeIndex].textColor2}
             />
             <Key
               value={"del"}
               backgroundColor={theme[themeIndex].keyBackground1}
+              shadowColor={theme[themeIndex].keyShadow1}
               textColor={theme[themeIndex].buttonText1}
+              textSize={"text-sm"}
               onClickFn={deleteDigit}
             />
           </div>
@@ -140,24 +175,28 @@ const App = () => {
             <Key
               value={4}
               backgroundColor={theme[themeIndex].keyBackground3}
+              shadowColor={theme[themeIndex].keyShadow3}
               onClickFn={addDigit}
               textColor={theme[themeIndex].textColor2}
             />
             <Key
               value={5}
               backgroundColor={theme[themeIndex].keyBackground3}
+              shadowColor={theme[themeIndex].keyShadow3}
               onClickFn={addDigit}
               textColor={theme[themeIndex].textColor2}
             />
             <Key
               value={6}
               backgroundColor={theme[themeIndex].keyBackground3}
+              shadowColor={theme[themeIndex].keyShadow3}
               onClickFn={addDigit}
               textColor={theme[themeIndex].textColor2}
             />
             <Key
               value={"+"}
               backgroundColor={theme[themeIndex].keyBackground3}
+              shadowColor={theme[themeIndex].keyShadow3}
               onClickFn={addSymbol}
               textColor={theme[themeIndex].textColor2}
             />
@@ -166,24 +205,28 @@ const App = () => {
             <Key
               value={1}
               backgroundColor={theme[themeIndex].keyBackground3}
+              shadowColor={theme[themeIndex].keyShadow3}
               onClickFn={addDigit}
               textColor={theme[themeIndex].textColor2}
             />
             <Key
               value={2}
               backgroundColor={theme[themeIndex].keyBackground3}
+              shadowColor={theme[themeIndex].keyShadow3}
               onClickFn={addDigit}
               textColor={theme[themeIndex].textColor2}
             />
             <Key
               value={3}
               backgroundColor={theme[themeIndex].keyBackground3}
+              shadowColor={theme[themeIndex].keyShadow3}
               onClickFn={addDigit}
               textColor={theme[themeIndex].textColor2}
             />
             <Key
               value={"-"}
               backgroundColor={theme[themeIndex].keyBackground3}
+              shadowColor={theme[themeIndex].keyShadow3}
               onClickFn={addSymbol}
               textColor={theme[themeIndex].textColor2}
             />
@@ -192,24 +235,28 @@ const App = () => {
             <Key
               value={"."}
               backgroundColor={theme[themeIndex].keyBackground3}
+              shadowColor={theme[themeIndex].keyShadow3}
               onClickFn={addSymbol}
               textColor={theme[themeIndex].textColor2}
             />
             <Key
               value={0}
               backgroundColor={theme[themeIndex].keyBackground3}
+              shadowColor={theme[themeIndex].keyShadow3}
               onClickFn={addDigit}
               textColor={theme[themeIndex].textColor2}
             />
             <Key
               value={"/"}
               backgroundColor={theme[themeIndex].keyBackground3}
+              shadowColor={theme[themeIndex].keyShadow3}
               onClickFn={addSymbol}
               textColor={theme[themeIndex].textColor2}
             />
             <Key
               value={"x"}
               backgroundColor={theme[themeIndex].keyBackground3}
+              shadowColor={theme[themeIndex].keyShadow3}
               onClickFn={addSymbol}
               textColor={theme[themeIndex].textColor2}
             />
@@ -218,12 +265,15 @@ const App = () => {
             <Key
               value={"RESET"}
               backgroundColor={theme[themeIndex].keyBackground1}
+              shadowColor={theme[themeIndex].keyShadow1}
               textColor={theme[themeIndex].buttonText1}
+              textSize={"text-sm"}
               onClickFn={reset}
             />
             <Key
               value={"="}
               backgroundColor={theme[themeIndex].keyBackground2}
+              shadowColor={theme[themeIndex].keyShadow2}
               textColor={theme[themeIndex].textColor1}
               onClickFn={calculate}
             />
